@@ -37,9 +37,11 @@ public class JpaMain {
             Member findMember = em.find(Member.class, 1L);
             findMember.setName("HelloJPA");
 */
+/*JPQL로 select
             //JPQL
             List<Member> result = em.createQuery("select m from Member as m", Member.class)
                     .getResultList();
+*/
 
 /*JPQL로 페이징 처리하는 방법
             List<Member> result2 = em.createQuery("select m from Member as m", Member.class)
@@ -49,11 +51,25 @@ public class JpaMain {
 */
 
 
+/*출력 부분
             for (Member member : result) {  //iter 자동완성으로 간단하게 상향된 for문 사용 가능
                 System.out.println("member.getName() = " + member.getName());   //soutv 자동완성으로 간단하게 작성 가능
             }
+*/
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
 
-            tx.commit();    //커밋까지 완료
+            //영속
+            System.out.println("===BEFORE===");   //persist함수를 사용했을 때, DB에 저장되는지 아닌지 타이밍을 찾기 위한 출력
+            em.persist(member);
+//            em.detach(member);  //영속성 컨텍스트에서 지움
+            System.out.println("===AFTER===");    //persist함수를 사용했을 때, DB에 저장되는지 아닌지 타이밍을 찾기 위한 출력
+
+
+
+            tx.commit();    //커밋까지 완료   //DB에 저장되는 타이밍
 
         } catch (Exception e){
             tx.rollback();
