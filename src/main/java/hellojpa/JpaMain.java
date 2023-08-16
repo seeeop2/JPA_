@@ -97,12 +97,27 @@ public class JpaMain {
                                             //만약 변경이 되었으면 스냅샷과 비교를 통해 업데이트를 자동으로 진행시킴
 */
 
+/*flush
             Member member = new Member(200L, "member200");
             em.persist(member); //영속 상태가 되며, 영속성 컨텍스트에 쿼리 축적
 
             em.flush(); // 일반적으로 commit함수에서 축적된 쿼리가 DB에 전달이 되나, 미리 축적된 SQL을 보내는 방법.
                         // 주의! -> flush 함수를 사용한다고 해서, 영속성 컨텍스트가 비워지는 것은 아니다.
+*/
 
+            Member member = em.find(Member.class, 150L);    //영속성 컨텍스트에 정보가 있음
+            member.setName("AAAAA");    //update 쿼리가 영속성 컨텍스트에 축적
+            em.detach(member);      // 영속성 컨텍스트에서 제거하였으니, update 쿼리 실행 안되었을 것 ---> 준영속 상태라고 부름
+            /*준영속 상태를 만드는 방법
+            1. em.detach(entity)
+            특정 엔티티만 준영속 상태로 전환
+
+            2. em.clear()
+            영속성 컨텍스트를 완전히 초기화
+
+            3. em.close()
+            영속성 컨텍스트를 종료
+            * */
 
 
             tx.commit();    //커밋까지 완료   //DB에 저장되는 타이밍
