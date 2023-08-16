@@ -56,9 +56,11 @@ public class JpaMain {
                 System.out.println("member.getName() = " + member.getName());   //soutv 자동완성으로 간단하게 작성 가능
             }
 */
+
+/*영속성 1차 캐시 확인을 위해 주석처리
             //비영속
             Member member = new Member();
-            member.setId(100L);
+            member.setId(101L);
             member.setName("HelloJPA");
 
             //영속
@@ -66,6 +68,32 @@ public class JpaMain {
             em.persist(member);
 //            em.detach(member);  //영속성 컨텍스트에서 지움
             System.out.println("===AFTER===");    //persist함수를 사용했을 때, DB에 저장되는지 아닌지 타이밍을 찾기 위한 출력
+
+            Member findMember = em.find(Member.class, 101L);
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.getName() = " + findMember.getName());
+*/
+
+/*1차 캐시 확인
+            Member member1 = em.find(Member.class, 101L);
+            Member member2 = em.find(Member.class, 101L);   //select문 한 번만 나옴. 이유는 1차 캐시 기능.
+
+            System.out.println("result = " + (member1 == member2) );    //true-> 동일성 보장
+*/
+
+/*쿼리 한번에 모아서 DB에 보내는 것을 확인할 수 있음
+            Member member1 = new Member(150L,"A");
+            Member member2 = new Member(160L,"B");
+
+            em.persist(member1);
+            em.persist(member2);
+            System.out.println("==============================");
+*/
+
+            Member findMember = em.find(Member.class, 150L);
+            findMember.setName("ZZZZZ");    //update문은 persist 메소드 호출 할 필요 없다.
+                                            //영속성 컨텍스트 내에는 최초 상태의 영속성 컨텍스트를 스냅샷으로 기억해두는 기능 있다.
+                                            //만약 변경이 되었으면 스냅샷과 비교를 통해 업데이트를 자동으로 진행시킴
 
 
 
