@@ -90,10 +90,18 @@ public class JpaMain {
             System.out.println("==============================");
 */
 
+/*
             Member findMember = em.find(Member.class, 150L);
             findMember.setName("ZZZZZ");    //update문은 persist 메소드 호출 할 필요 없다.
                                             //영속성 컨텍스트 내에는 최초 상태의 영속성 컨텍스트를 스냅샷으로 기억해두는 기능 있다.
                                             //만약 변경이 되었으면 스냅샷과 비교를 통해 업데이트를 자동으로 진행시킴
+*/
+
+            Member member = new Member(200L, "member200");
+            em.persist(member); //영속 상태가 되며, 영속성 컨텍스트에 쿼리 축적
+
+            em.flush(); // 일반적으로 commit함수에서 축적된 쿼리가 DB에 전달이 되나, 미리 축적된 SQL을 보내는 방법.
+                        // 주의! -> flush 함수를 사용한다고 해서, 영속성 컨텍스트가 비워지는 것은 아니다.
 
 
 
