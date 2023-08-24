@@ -15,7 +15,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="10"/> <!-- 몇 개의 쿼리를 모아서 DB에 보낼지 결정-->
-            <property name="hibernate.hbm2ddl.auto" value="create" /><!--테이블 자동 생성-->
+            <property name="hibernate.hbm2ddl.auto" value="update" /><!--테이블 자동 생성-->
             <!--
             create-drop : create와 같으나, 종료시점에 table drop. 테스트 코드처럼 마지막에 다 없애고 싶을 때 사용
             update : 변경분만 반영(운영DB에서 사용하면 안됨) -> 컬럼 추가할 때 사용. 대신 컬럼 삭제는 불가

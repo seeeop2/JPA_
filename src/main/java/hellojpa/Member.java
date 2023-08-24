@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq")
 public class Member {
 
 /*
@@ -46,16 +47,18 @@ public class Member {
         this.name = name;
     }
 */
+
+    /*기본키 매핑 강의를 위해 주석
     @Id
     private Long id;
 
 //    @Column(name = "name")  //객체는 username이라 쓰는데, DB 컬럼에는 name을 써야할 때
-    /*
+    *//*
     @Column(updatable = false)   // 기본은 true임. false일시, 컬럼 변경되지 않으나, DB에서 강제로 변경하면 변경되긴 함. 비슷한 것 : insertable
     @Column(nullable = false)   //not null 기능.
     @Column(unique = true)  //잘 사용하지 않음. 제약 이름이 랜덤이라서 오류가 났을 때 알아보기 힘듦. 따라서, class 위 @Table(uniqueConstraints = 제약이름 )
     @Column(columnDefinition = "varchar(100) default 'EMPTY'")  //column 정의를 직접 할 수 있다.
-    */
+    *//*
     private String username;
 
     private Integer age;    //int도 가능하지만, integer도 가능
@@ -85,11 +88,11 @@ public class Member {
     @Transient  //DB에 컬럼 생기지 않게 해준다
     private int temp;
 
-/*
+*//*
     @Column(precision = 19) //BigDecimal타입(매우 큰 수)에서 활용 가능. precision-소수점을 포함한 전체 자릿, scale-소수의 자릿
                             // *float, double 에는 적용 불가
     private BigDecimal num;
-*/
+*//*
 
     public Long getId() {
         return id;
@@ -153,5 +156,51 @@ public class Member {
 
     public void setTemp(int temp) {
         this.temp = temp;
+    }
+    */
+
+    @Id //직접 할당 방식
+//    @GeneratedValue(strategy = GenerationType.AUTO) //자동할당 방법1. DB방언에 맞춰서 자동으로 생성
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동할당 방법2. 기본키 생성을 DB에 위임.
+                                                        //대표적으로 MySQL의 AutoIncrement
+
+                                                        //insert쿼리에 id값을 null로 작성하기 때문에, DB에 들어가기 전까지 id값 모른다.
+                                                        //따라서, 다른 항목들과는 별개로 persist메소드에서 바로 isert 쿼리 나간다.
+
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE) //자동할당 방법3. 시퀀스 오브젝트를 통해서 값을 설정
+                                                        //대표적으로 Oracle의 Sequence
+                                                        //타입은 Long을 권장함. int, Integer은 추천 안함
+
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="member_seq_generator" ) //class위 어노테이션 참고
+//    @GeneratedValue(strategy = GenerationType.TABLE)//자동할당 방법4.
+                                                      //별도의 테이블을 생성해서 id값 저장. 모든 DB에서 사용할 수 있다는 장점. 단점은 성능
+    private Long id;
+    /*
+    기본 키 제약 조건 : Not null, 유일, 변하면 안됨
+    권장하는 방법 : Long 타입 + 대체키 + 키 생성전략 사용
+    기본키는 주민등록번호 같은 수 말고 임의의 수 추천함
+
+    */
+
+    @Column(name = "name",nullable = false)
+    private String username;
+
+    public Member() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

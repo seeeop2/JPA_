@@ -121,6 +121,7 @@ public class JpaMain {
             영속성 컨텍스트를 종료
             * */
 
+/*
             Member member = new Member();
             member.setId(1L);
             member.setUsername("A");
@@ -132,6 +133,11 @@ public class JpaMain {
             member2.setUsername("B");
             member2.setRoleType(RoleType.ADMIN);
             em.persist(member2);
+*/
+            Member member = new Member();
+            member.setUsername("C");
+            em.persist(member);
+
 
 
             tx.commit();    //커밋까지 완료   //DB에 저장되는 타이밍
