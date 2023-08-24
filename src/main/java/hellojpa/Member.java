@@ -161,17 +161,13 @@ public class Member {
 
     @Id //직접 할당 방식
 //    @GeneratedValue(strategy = GenerationType.AUTO) //자동할당 방법1. DB방언에 맞춰서 자동으로 생성
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동할당 방법2. 기본키 생성을 DB에 위임.
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동할당 방법2. 기본키 생성을 DB에 위임.
                                                         //대표적으로 MySQL의 AutoIncrement
-
-                                                        //insert쿼리에 id값을 null로 작성하기 때문에, DB에 들어가기 전까지 id값 모른다.
-                                                        //따라서, 다른 항목들과는 별개로 persist메소드에서 바로 isert 쿼리 나간다.
-
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE) //자동할당 방법3. 시퀀스 오브젝트를 통해서 값을 설정
                                                         //대표적으로 Oracle의 Sequence
                                                         //타입은 Long을 권장함. int, Integer은 추천 안함
 
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="member_seq_generator" ) //class위 어노테이션 참고
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="member_seq_generator" ) //class위 어노테이션 참고
 //    @GeneratedValue(strategy = GenerationType.TABLE)//자동할당 방법4.
                                                       //별도의 테이블을 생성해서 id값 저장. 모든 DB에서 사용할 수 있다는 장점. 단점은 성능
     private Long id;
@@ -179,7 +175,6 @@ public class Member {
     기본 키 제약 조건 : Not null, 유일, 변하면 안됨
     권장하는 방법 : Long 타입 + 대체키 + 키 생성전략 사용
     기본키는 주민등록번호 같은 수 말고 임의의 수 추천함
-
     */
 
     @Column(name = "name",nullable = false)
