@@ -134,9 +134,48 @@ public class JpaMain {
             member2.setRoleType(RoleType.ADMIN);
             em.persist(member2);
 */
+/*
             Member member = new Member();
             member.setUsername("C");
             em.persist(member);
+*/
+
+
+/*
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeamId(team.getId());
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Long findTeamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class, findTeamId); // Team 객체를 찾는데 너무 번거롭고, 오래 걸림
+*/
+
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
+
+/* 영속성 컨텍스트에서 가져오는 것 말고 DB에서 가져오는 것 보고 싶을 경우,
+flush로 모아둔 쿼리 내보내고 clear로 영속성컨텍스트 초기화
+            em.flush();
+            em.clear();
+*/
+
+            System.out.println("findTeam.getName() = " + findTeam.getName());
 
 
 

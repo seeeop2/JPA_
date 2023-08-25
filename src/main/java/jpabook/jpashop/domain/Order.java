@@ -3,7 +3,7 @@ package jpabook.jpashop.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+//@Entity
 @Table(name = "ORDERS")
 public class Order {
 
@@ -14,15 +14,15 @@ public class Order {
     @Column(name = "MEMBER_ID")
     private Long memberId;
 
-    private Member member;
+//    private Member member;  //이게 객체지향적이라고 판단함.
 
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
+//    public Member getMember() {
+//        return member;
+//    }
+//
+//    public void setMember(Member member) {
+//        this.member = member;
+//    }
 
     private LocalDateTime orderDate;    //스프링부트는 자동으로 orderDate(카멜 표기법,Camel Case)를
                                         //order_date(underscore)로 수정한다.
@@ -31,7 +31,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public Long getId() {ㅊ
+    public Long getId() {
         return id;
     }
 

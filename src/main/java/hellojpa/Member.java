@@ -158,7 +158,7 @@ public class Member {
         this.temp = temp;
     }
     */
-
+/*
     @Id //직접 할당 방식
 //    @GeneratedValue(strategy = GenerationType.AUTO) //자동할당 방법1. DB방언에 맞춰서 자동으로 생성
 //    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동할당 방법2. 기본키 생성을 DB에 위임.
@@ -171,11 +171,11 @@ public class Member {
 //    @GeneratedValue(strategy = GenerationType.TABLE)//자동할당 방법4.
                                                       //별도의 테이블을 생성해서 id값 저장. 모든 DB에서 사용할 수 있다는 장점. 단점은 성능
     private Long id;
-    /*
+    *//*
     기본 키 제약 조건 : Not null, 유일, 변하면 안됨
     권장하는 방법 : Long 타입 + 대체키 + 키 생성전략 사용
     기본키는 주민등록번호 같은 수 말고 임의의 수 추천함
-    */
+    *//*
 
     @Column(name = "name",nullable = false)
     private String username;
@@ -197,5 +197,45 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
+    }*/
+
+    //단방향 연관관계 시작
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private Long id;
+
+    @Column(name = "USERNAME")
+    private String username;
+
+/* 이렇게 하면 객체지향적이지 않다
+    @Column(name = "TEAM_ID")
+    private Long teamId;
+*/
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
