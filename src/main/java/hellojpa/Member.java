@@ -212,7 +212,8 @@ public class Member {
     private Long teamId;
 */
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name = "TEAM_ID")   //외래키가 있는 곳을 '진짜 매핑'(연관 관계의 주인)으로 설정
+                                    //외래키가 있는 곳이 '다' 이며, @ManyToOne 어노테이션을 쓰는 쪽이 무조건 연관 관계의 주인이 된다
     private Team team;
 
     public Long getId() {

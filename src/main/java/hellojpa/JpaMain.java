@@ -166,8 +166,6 @@ public class JpaMain {
             member.setTeam(team);
             em.persist(member);
 
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
 
 /* 영속성 컨텍스트에서 가져오는 것 말고 DB에서 가져오는 것 보고 싶을 경우,
 flush로 모아둔 쿼리 내보내고 clear로 영속성컨텍스트 초기화
@@ -175,8 +173,18 @@ flush로 모아둔 쿼리 내보내고 clear로 영속성컨텍스트 초기화
             em.clear();
 */
 
-            System.out.println("findTeam.getName() = " + findTeam.getName());
+//            System.out.println("findTeam.getName() = " + findTeam.getName());
 
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
+
+            List<Member> members = findTeam.getMembers();
+            for (Member member1 : members) {
+                System.out.println("member1.getUsername() = " + member1.getUsername());
+            }
 
 
             tx.commit();    //커밋까지 완료   //DB에 저장되는 타이밍
